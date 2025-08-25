@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diffie-Hellman Key Exchange Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Diffie-Hellman Simulator</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Simulator</a></li>
+      <li><a href="importance.html">Importance</a></li>
+      <li><a href="howItWorks.html">How it Works</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1>Diffie-Hellman Key Exchange</h1>
+    <p class="subtitle">A visual simulation of secure key exchange over an insecure channel</p>
+
+    <div class="setup-controls">
+      <div class="radio-group">
+        <label><input type="radio" name="mode" value="manual" checked> Manual Base & Prime</label>
+        <label><input type="radio" name="mode" value="auto"> Auto Generate</label>
+      </div>
+      <div id="primeInputs">
+        <div class="input-group">
+          <label for="baseInput">Base (B):</label>
+          <input id="baseInput" type="number" value="5" min="2">
+        </div>
+        <div class="input-group">
+          <label for="primeInput">Prime (P):</label>
+          <input id="primeInput" type="number" value="23" min="3">
+        </div>
+        <button id="startBtn" onclick="initiate()">Start Simulation</button>
+      </div>
+    </div>
+
+    <div id="controls" class="step-controls"></div>
+
+    <div class="container">
+      <div class="panel" id="panelX">
+        <div class="panel-header">
+          <h2>Alice</h2>
+          <div class="icon user-icon">👩‍💻</div>
+        </div>
+        <div id="stepsX" class="steps-container"></div>
+      </div>
+      
+      <div class="message-lines">
+        <div class="message-line" id="x1Line"></div>
+        <div class="message-line" id="y1Line"></div>
+      </div>
+      
+      <div class="panel" id="panelY">
+        <div class="panel-header">
+          <h2>Bob</h2>
+          <div class="icon user-icon">👨‍💻</div>
+        </div>
+        <div id="stepsY" class="steps-container"></div>
+      </div>
+    </div>
+
+    <div class="panel attacker" id="attacker">
+      <div class="panel-header">
+        <h2>Eve (Eavesdropper)</h2>
+        <div class="icon attacker-icon">🕵️‍♀️</div>
+      </div>
+      <div id="attackerView" class="steps-container"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Diffie-Hellman Key Exchange Simulator</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

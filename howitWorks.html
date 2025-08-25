@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Diffie-Hellman Works</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card h2 {
+      margin-top: 0;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: var(--highlight);
+    }
+    
+    .step-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      position: relative;
+      border-left: 3px solid var(--highlight);
+    }
+    
+    .step-number {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 30px;
+      height: 30px;
+      background-color: var(--highlight);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .formula {
+      font-family: 'Courier New', monospace;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+    
+    .diagram {
+      margin: 2rem auto;
+      max-width: 100%;
+      display: block;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .color-key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .color-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .color-box {
+      width: 15px;
+      height: 15px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Diffie-Hellman Simulator</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Simulator</a></li>
+      <li><a href="importance.html">Importance</a></li>
+      <li><a href="howItWorks.html" class="active">How it Works</a></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <h1>How Diffie-Hellman Key Exchange Works</h1>
+    <p class="subtitle">Understanding the mathematics and logic behind secure key exchange</p>
+
+    <div class="card">
+      <h2>The Mathematical Foundation</h2>
+      <p>The Diffie-Hellman key exchange relies on a mathematical problem called the <strong>Discrete Logarithm Problem</strong>. This problem is asymmetric in nature:</p>
+      <p>It's easy to calculate:</p>
+      <div class="formula">A = g<sup>a</sup> mod p</div>
+      <p>But it's computationally difficult to reverse the operation and find <code>a</code> when you only know <code>A</code>, <code>g</code>, and <code>p</code>:</p>
+      <div class="formula">a = log<sub>g</sub> A mod p</div>
+      <p>This one-way function property is what makes the key exchange secure against eavesdroppers.</p>
+    </div>
+
+    <div class="card">
+      <h2>Key Exchange Process</h2>
+      
+      <div class="color-key">
+        <div class="color-item">
+          <div class="color-box" style="background-color: var(--public-value, #f59e0b)"></div>
+          <span>Public Information</span>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background-color: var(--alice-color, #8b5cf6)"></div>
+          <span>Alice's Private Information</span>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background-color: var(--bob-color, #3b82f6)"></div>
+          <span>Bob's Private Information</span>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background-color: var(--success-color, #22c55e)"></div>
+          <span>Shared Secret</span>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Setup of Public Parameters</h3>
+        <p>Alice and Bob agree on two public numbers:</p>
+        <ul>
+          <li>A large prime number <strong>P</strong> (modulus)</li>
+          <li>A base <strong>B</strong> (often called a generator)</li>
+        </ul>
+        <p>These numbers do not need to be kept secret and can be communicated over an insecure channel.</p>
+        <div class="formula">Public: B and P</div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Selection of Private Keys</h3>
+        <p>Alice and Bob each select their own private keys:</p>
+        <ul>
+          <li>Alice chooses a private random number <strong>x</strong></li>
+          <li>Bob chooses a private random number <strong>y</strong></li>
+        </ul>
+        <p>These private keys are never shared with anyone.</p>
+        <div class="formula">Alice's private key: x<br>Bob's private key: y</div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Computation of Public Values</h3>
+        <p>Each person computes their public value using the agreed parameters and their private key:</p>
+        <ul>
+          <li>Alice computes: <strong>x₁ = B<sup>x</sup> mod P</strong></li>
+          <li>Bob computes: <strong>y₁ = B<sup>y</sup> mod P</strong></li>
+        </ul>
+        <div class="formula">Alice's public value: x₁ = B<sup>x</sup> mod P<br>Bob's public value: y₁ = B<sup>y</sup> mod P</div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>Exchange of Public Values</h3>
+        <p>Alice and Bob exchange their public values:</p>
+        <ul>
+          <li>Alice sends <strong>x₁</strong> to Bob</li>
+          <li>Bob sends <strong>y₁</strong> to Alice</li>
+        </ul>
+        <p>These values can be sent over an insecure channel. An eavesdropper would see these values but cannot easily derive the private keys.</p>
+        <div class="formula">Alice → x₁ → Bob<br>Bob → y₁ → Alice</div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-number">5</div>
+        <h3>Computation of Shared Secret</h3>
+        <p>Both parties can now compute the same shared secret independently:</p>
+        <ul>
+          <li>Alice computes: <strong>K = (y₁)<sup>x</sup> mod P</strong></li>
+          <li>Bob computes: <strong>K = (x₁)<sup>y</sup> mod P</strong></li>
+        </ul>
+        <p>Mathematically, these values are equal:</p>
+        <div class="formula">
+          Alice: K = (y₁)<sup>x</sup> mod P = (B<sup>y</sup>)<sup>x</sup> mod P = B<sup>y·x</sup> mod P<br>
+          Bob: K = (x₁)<sup>y</sup> mod P = (B<sup>x</sup>)<sup>y</sup> mod P = B<sup>x·y</sup> mod P
+        </div>
+        <p>Since x·y = y·x, both Alice and Bob arrive at the same value K, which becomes their shared secret key.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>The Security Guarantee</h2>
+      <p>An eavesdropper (Eve) can observe:</p>
+      <ul>
+        <li>The public parameters <strong>B</strong> and <strong>P</strong></li>
+        <li>Alice's public value <strong>x₁ = B<sup>x</sup> mod P</strong></li>
+        <li>Bob's public value <strong>y₁ = B<sup>y</sup> mod P</strong></li>
+      </ul>
+      
+      <p>To determine the shared secret, Eve would need to calculate:</p>
+      <div class="formula">K = B<sup>x·y</sup> mod P</div>
+      
+      <p>However, to do this, Eve needs to know either:</p>
+      <ul>
+        <li>Alice's private key <strong>x</strong>, which would require solving: <strong>x = log<sub>B</sub> x₁ mod P</strong></li>
+        <li>OR Bob's private key <strong>y</strong>, which would require solving: <strong>y = log<sub>B</sub> y₁ mod P</strong></li>
+      </ul>
+      
+      <p>Both require solving the discrete logarithm problem, which is computationally infeasible for large primes (typically 2048+ bits in practice).</p>
+    </div>
+
+    <div class="card">
+      <h2>Limitations and Considerations</h2>
+      <p>Despite its elegance, Diffie-Hellman has some considerations worth noting:</p>
+      
+      <ul>
+        <li><strong>Man-in-the-Middle Vulnerability</strong> - Without authentication, an attacker could intercept and modify communications, establishing separate keys with each party.</li>
+        <li><strong>Parameter Selection</strong> - The security depends on choosing appropriate values for B and P. Some values can lead to weaknesses.</li>
+        <li><strong>Computational Overhead</strong> - The modular exponentiation operations are computationally intensive, especially with large numbers.</li>
+        <li><strong>Quantum Vulnerability</strong> - Quantum computers could potentially solve the discrete logarithm problem efficiently using Shor's algorithm.</li>
+      </ul>
+      
+      <p>In practice, Diffie-Hellman is often used with additional authentication mechanisms to prevent man-in-the-middle attacks, such as digital signatures or certificates.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>Diffie-Hellman Key Exchange Simulator </p>
+  </footer>
+</body>
+</html>
