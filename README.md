@@ -25,7 +25,7 @@ Built entirely with HTML, CSS, and JavaScript for educational purposes.
 ## How to Run
 
 1. Clone the repository:  
-   git clone https://github.com/your-username/diffie-hellman-key-exchange-simulator.git  
+   git clone https://github.com/mehta-sahil/diffie-hellman-key-exchange-simulator.git  
    cd diffie-hellman-key-exchange-simulator  
 
 2. Open index.html in any modern web browser.  
